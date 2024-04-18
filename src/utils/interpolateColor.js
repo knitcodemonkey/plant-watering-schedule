@@ -1,25 +1,26 @@
 const toRGBArray = (rgbStr) => rgbStr.match(/\d+/g).map(Number);
 
-export const interpolateColor = (color1, color2, color3, factor = 0.5) => {
-  const color1arr = toRGBArray(color1);
-  const color2arr = toRGBArray(color2);
-  const color3arr = toRGBArray(color3);
+export const interpolateColor = (colors = [], factor = 0.5) => {
+  const ratioOfColors = colors.length;
+  const colorArr = colors.map((color) => toRGBArray(color))
 
-  const firstColor = factor <= 0.5 ? color1arr : color2arr;
-  const secondColor = factor > 0.5 ? color2arr : color3arr;
+  // You only really need to interpolate between two colors as the division is equal between them
+  const index = Math.floor(colors.length * factor);
+  const firstColor = colorArr[index];
+  const secondColor = colorArr[index + 1];
   let result = JSON.parse(JSON.stringify(firstColor));
 
+  // This finds the interpolation per rgb number value
   for (let i = 0; i < 3; i++) {
     const interpolation = Math.round(
       firstColor[i] + factor * (secondColor[i] - firstColor[i])
     );
-
     result[i] = interpolation;
   }
 
-  return result;
+  return `rgb(${result.join(',')})`;
 };
 
-// const colorArray = interpolateColor("rgb(67, 93, 67)", "rgb(183, 20, 57)", "rgb(183, 20, 57)", 5);
-
 export default interpolateColor;
+
+// const colorArray = interpolateColor(["rgb(67, 93, 67)", "rgb(183, 20, 57)", "rgb(183, 20, 57)"], 5);

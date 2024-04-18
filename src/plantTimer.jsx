@@ -47,15 +47,16 @@ function PlantTimer({
     timeSinceWatered
   );
 
-  const colorArray = interpolateColor(
+  const colors = [
     'rgb(45,81,0)',
-    'rgb(250,149,20)',
-    'rgb(243,44,6)',
-    factor
-  );
+    'rgb(181,196,34)',  
+    'rgb(250,149,20)', 
+    'rgb(243,44,6)', 
+    'rgb(120,0,1)'
+  ]
 
   const divStyle = {
-    backgroundColor: `rgb(${colorArray.join(',')})`,
+    backgroundColor: interpolateColor(colors,factor),
   };
 
   return (
