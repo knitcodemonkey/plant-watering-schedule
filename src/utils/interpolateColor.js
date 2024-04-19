@@ -1,6 +1,6 @@
 const toRGBArray = (rgbStr) => rgbStr.match(/\d+/g).map(Number);
 
-export const interpolateColor = (colors = [], factor = 0.5) => {
+export const interpolateColor = (colors = ['rgb(0,0,0)', 'rgb(255,255,255)'], factor = 0.5) => {
   const ratioOfColors = colors.length;
   const colorArr = colors.map((color) => toRGBArray(color))
 
@@ -8,6 +8,8 @@ export const interpolateColor = (colors = [], factor = 0.5) => {
   const index = Math.floor(colors.length * factor);
   const firstColor = colorArr[index];
   const secondColor = colorArr[index + 1];
+
+
   let result = JSON.parse(JSON.stringify(firstColor));
 
   // This finds the interpolation per rgb number value

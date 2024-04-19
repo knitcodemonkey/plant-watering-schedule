@@ -18,18 +18,16 @@ const percentageBetweenDays = (
  *
  */
 function PlantTimer({
-  plantName,
+  plantName = "Oh No! Time to buy plants!",
   preferredDaysBetweenWaterings,
-  lastWatered,
+  lastWatered = Date.now(),
   setLastWatered,
   plantKey,
 }) {
-  const [startTime, setStartTime] = useState(
-    new Date(lastWatered) || Date.now()
-  ); //based on button click
-  const [timeSinceWatered, setTimeSinceWatered] = useState(
-    Date.now() - startTime
-  );
+  const [startTime, setStartTime] = useState(new Date(lastWatered)); //based on button click
+  const [timeSinceWatered, setTimeSinceWatered] = useState(Date.now() - startTime);
+
+  const timeToNextWatering = preferredDaysBetweenWaterings * 24 * 60 * 60 * 1000
 
   useEffect(() => {
     const intervalId = setInterval(
@@ -48,11 +46,12 @@ function PlantTimer({
   );
 
   const colors = [
-    'rgb(45,81,0)',
-    'rgb(181,196,34)',  
-    'rgb(250,149,20)', 
-    'rgb(243,44,6)', 
-    'rgb(120,0,1)'
+    'rgb(73,138,94)',
+    'rgb(149,179,137)',  
+    'rgb(185,197,155)', 
+    'rgb(220,176,93)', 
+    'rgb(211,127,111)',
+    'rgb(147,0,18)'
   ]
 
   const divStyle = {
@@ -61,16 +60,12 @@ function PlantTimer({
 
   return (
     <div className="plantTimer" style={divStyle}>
-      {plantName && <h1>{plantName}</h1>}
+      <h1>{plantName}</h1>
       {preferredDaysBetweenWaterings && (
-        <p>
-          Preferred Days Between Waterings
-          <br />
-          {preferredDaysBetweenWaterings} Days
-        </p>
+        <p>{preferredDaysBetweenWaterings} Days Between Waterings</p>
       )}
       <p>
-        Last watering:
+        Last watered:
         <br />
         {timeFormat(startTime)}
       </p>
